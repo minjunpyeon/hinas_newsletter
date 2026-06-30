@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 Avikus Newsletter (Issue 01 / 창간호) -> Outlook 본문(HTML) + 이미지 CID 인라인 삽입.
-docx(뉴스레터_일간호.docx) 내용을 바탕으로 만든 newsletter_email_issue01.html 을
+docx(뉴스레터_일간호.docx) 내용을 바탕으로 만든 newsletter_email.html 을
 Outlook 새 메일 본문에 '박힌 채로' 띄웁니다. (자동 발송 X — 검토 후 직접 '보내기')
 """
 import os
 import win32com.client
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-HTML_PATH = os.path.join(BASE, "newsletter_email_issue01.html")
+HTML_PATH = os.path.join(BASE, "newsletter_email.html")
 ASSETS = os.path.join(BASE, "assets")
 
 # HTML 안의 cid:이름  ->  실제 이미지 파일

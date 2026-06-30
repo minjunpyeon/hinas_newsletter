@@ -9,7 +9,7 @@ PPT(암호화된 구형 포맷)에서 추출한 이미지로 만든 뉴스레터
 ## 📁 폴더 구성
 
 ```
-archive_vol1/
+issues/vol1_hinas/
 ├─ run.bat                          # ★ 더블클릭하면 한 번에 실행 (Python 체크+설치+실행)
 ├─ newsletter_email.html            # 이메일 본문 HTML (글/디자인 수정은 여기)
 ├─ create_outlook_email.py          # Outlook 메일 자동 생성 스크립트
