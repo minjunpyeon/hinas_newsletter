@@ -39,27 +39,19 @@ PR_ATTACH_CONTENT_ID  = "http://schemas.microsoft.com/mapi/proptag/0x3712001F"
 PR_ATTACH_MIME_TAG    = "http://schemas.microsoft.com/mapi/proptag/0x370E001F"
 PR_ATTACHMENT_HIDDEN  = "http://schemas.microsoft.com/mapi/proptag/0x7FFE000B"
 
-def main():
-    if not os.path.exists(HTML_PATH):
-        print("[오류] HTML 파일을 찾을 수 없습니다:", HTML_PATH)
-        return
-    if not os.path.isdir(ASSETS):
-        print("[경고] assets 폴더를 찾을 수 없습니다:", ASSETS)
-        print("       이미지가 본문에 표시되지 않을 수 있습니다.")
-    else:
-        print("[확인] assets 폴더:", ASSETS)
+# 메일 제목 (대량 발송 send_bulk.py 도 이 값을 그대로 사용)
+SUBJECT = "HiNAS Newsletter — Vol.1"
 
+
+def load_html():
+    """본문 HTML 을 읽어 문자열로 반환."""
     with open(HTML_PATH, "r", encoding="utf-8") as f:
-        html = f.read()
+        return f.read()
 
-    outlook = win32com.client.Dispatch("Outlook.Application")
-    mail = outlook.CreateItem(0)  # 0 = olMailItem
-    mail.Subject = "HiNAS Newsletter — Vol.1"
-    # 받는 사람은 검토 후 직접 입력하세요. 필요하면 아래 주석을 해제:
-    # mail.To = "someone@example.com"
 
-    mail.HTMLBody = html  # 본문에 직접 기재
-
+def attach_inline_images(mail):
+    """IMAGES 딕셔너리대로 mail 에 CID 인라인 이미지를 첨부. 삽입한 개수 반환."""
+    count = 0
     for cid, fname in IMAGES.items():
         path = os.path.join(ASSETS, fname)
         if not os.path.exists(path):
@@ -74,6 +66,28 @@ def main():
         except Exception:
             pass
         print("  인라인 삽입:", cid, "<-", fname)
+        count += 1
+    return count
+
+
+def main():
+    if not os.path.exists(HTML_PATH):
+        print("[오류] HTML 파일을 찾을 수 없습니다:", HTML_PATH)
+        return
+    if not os.path.isdir(ASSETS):
+        print("[경고] assets 폴더를 찾을 수 없습니다:", ASSETS)
+        print("       이미지가 본문에 표시되지 않을 수 있습니다.")
+    else:
+        print("[확인] assets 폴더:", ASSETS)
+
+    outlook = win32com.client.Dispatch("Outlook.Application")
+    mail = outlook.CreateItem(0)  # 0 = olMailItem
+    mail.Subject = SUBJECT
+    # 받는 사람은 검토 후 직접 입력하세요. 필요하면 아래 주석을 해제:
+    # mail.To = "someone@example.com"
+
+    mail.HTMLBody = load_html()  # 본문에 직접 기재
+    attach_inline_images(mail)
 
     mail.Display(False)  # 메일 창 열기 (발송 X). 바로 보내려면 mail.Send()
     print("\n완료: Outlook 새 메일 창이 열렸습니다. 내용 확인 후 '보내기'를 누르세요.")

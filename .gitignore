@@ -8,3 +8,9 @@ __pycache__/
 # OS
 Thumbs.db
 .DS_Store
+
+# 수신자 실제 목록(개인정보) — 커밋 금지. 샘플/설명만 추적.
+recipients/*.csv
+recipients/*.xlsx
+recipients/*.txt
+!recipients/_recipients_sample.csv
