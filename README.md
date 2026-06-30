@@ -32,6 +32,16 @@ newsletter_new/
 
 > 명령줄로 직접 실행하려면 해당 호 폴더에서: `py create_outlook_email.py`
 
+### 📨 대량 발송 (선사 등 다수 수신자 BCC 한 통)
+
+1. 수신자 엑셀을 **CSV(UTF-8)로 저장**해 [`recipients/`](recipients/) 폴더에 넣기
+   (열 위치·제목 무관 — 이메일 형태면 자동 추출, 중복 제거)
+2. 발송할 호 폴더에서: `py send_bulk.py`
+3. 전원이 **BCC**에 들어간 메일 1통이 열림 → **인원수 확인 후 보내기**
+
+자세한 규칙은 [`recipients/README.md`](recipients/README.md) 참고.
+실제 수신자 목록은 개인정보라 git에 커밋되지 않아(`.gitignore` 제외).
+
 ## 📖 자세한 사용법
 
 - 전체 가이드: [`docs/사용법_Avikus_Newsletter.md`](docs/사용법_Avikus_Newsletter.md)
