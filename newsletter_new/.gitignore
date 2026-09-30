@@ -14,3 +14,7 @@ recipients/*.csv
 recipients/*.xlsx
 recipients/*.txt
 !recipients/_recipients_sample.csv
+
+# PDF 생성물 — build_pdf.py 로 언제든 재생성 (원하면 이 줄 지우고 추적)
+issues/*/*_print.html
+issues/*/newsletter*.pdf

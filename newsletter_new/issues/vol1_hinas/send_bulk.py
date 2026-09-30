@@ -112,6 +112,8 @@ def main():
     outlook = win32com.client.Dispatch("Outlook.Application")
     mail = outlook.CreateItem(0)  # 0 = olMailItem
     mail.Subject = base.SUBJECT
+    if getattr(base, "SEND_FROM", ""):
+        mail.SentOnBehalfOfName = base.SEND_FROM   # 그룹/공용 메일함 명의로 발송
     mail.BCC = "; ".join(emails)   # 250명을 BCC 로 → 서로 주소가 안 보임
     # 일부 Exchange 는 To 가 비어 있으면 거부합니다. 그럴 땐 아래 주석을 풀고
     # 본인(발신) 주소를 넣으세요:

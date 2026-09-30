@@ -42,6 +42,12 @@ PR_ATTACHMENT_HIDDEN  = "http://schemas.microsoft.com/mapi/proptag/0x7FFE000B"
 # 메일 제목 (대량 발송 send_bulk.py 도 이 값을 그대로 사용)
 SUBJECT = "HiNAS Newsletter — Vol.1"
 
+# 보낸 사람(발신 주소). 공용/그룹 메일함 명의로 보낼 때 사용.
+#   - 그 메일함이 Outlook 에 추가돼 있고 'Send As / Send on Behalf' 권한이 있어야 함.
+#   - 권한이 'Send As' 면 그대로 그룹주소로, 'on behalf' 면 "본인 on behalf of 그룹" 으로 표시됨.
+#   - 빈 문자열("") 이면 로그인된 기본 계정으로 발송.
+SEND_FROM = "newsletter@avikus.ai"
+
 
 def load_html():
     """본문 HTML 을 읽어 문자열로 반환."""
@@ -83,6 +89,8 @@ def main():
     outlook = win32com.client.Dispatch("Outlook.Application")
     mail = outlook.CreateItem(0)  # 0 = olMailItem
     mail.Subject = SUBJECT
+    if SEND_FROM:
+        mail.SentOnBehalfOfName = SEND_FROM   # 그룹/공용 메일함 명의로 발송
     # 받는 사람은 검토 후 직접 입력하세요. 필요하면 아래 주석을 해제:
     # mail.To = "someone@example.com"
 
